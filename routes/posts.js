@@ -8,7 +8,7 @@ const v = new Validator;
 /* GET users listing. */
 
 router.post('/', async (req, res) => {
-  const { nama, id_hewan, daerah, lokasimap, jenis, kelamin, informasi} = req.body;
+  const { nama, id_hewan, daerah, lokasimap, jenis, kelamin, tgl_hilang , informasi} = req.body;
     const schema = {
         nama: 'string',
         id_hewan: 'string',
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         .json(validate);
        }
        //Uji coba date
-       const tgl_hilang	 = new Date().toISOString();
+      //  const tgl_hilang	 = new Date().toISOString();
         const newPost = {
         nama, id_hewan, daerah, lokasimap,tgl_hilang, jenis, kelamin, informasi
      };

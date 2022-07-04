@@ -1,0 +1,15 @@
+GET http://localhost:2000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsIm5hbWEiOiJ3YWh5dSIsImVtYWlsIjoibnVlZzQ0QGdtYWlsLmNvbSIsImlhdCI6MTY1Njk3NDUzMSwiZXhwIjoxNjU3MDYwOTMxfQ.-YI30mpmPMAVyYdos_MkyStxESMkgaQkfxK6mIhOZH4
+
+###
+POST http://localhost:2000/users/login
+Content-Type: application/json
+
+{ 
+    "nama" : "wahyu",
+    "email" : "nueg44@gmail.com",
+    "password" : "akuaku"
+}
+
+###
+GET http://localhost:2000/token
