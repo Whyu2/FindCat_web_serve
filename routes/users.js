@@ -6,6 +6,7 @@ const Validator = require('fastest-validator');
 require('dotenv').config()
 var verifyToken = require('../middleware/VerifyToken.js');
 const { Users } = require('../models');
+
 const v = new Validator;
 
 /* GET users listing. */
@@ -17,29 +18,33 @@ router.get('/',verifyToken ,async  (req, res) => {
 });
 
 router.post('/login',async (req, res) => {
-
-  const user = await Users.findAll({
+  const user = await Users.findOne({
     where: {
       email: req.body.email
     }
   });
- const match = await bcrypt.compare(req.body.password, user[0].password);
-  if (!match) return res.status(400).json({message : 'Password Salah'});
-  const userId = user[0].id;
-  const nama = user[0].nama;
-  const email = user[0].email;
+
+  if (!user) return res.status(400).json({msg : 'Email salah'});
+ const match = await bcrypt.compare(req.body.password, user.password);
+  if (!match) return res.status(400).json({msg : 'Password Salah'});
+  const userId = user.id;
+  const nama = user.nama;
+  const email = user.email;
   const accessToken = jwt.sign({userId, nama, email}, process.env.ACCESS_TOKEN_SECRET,{
     expiresIn: '15s'
   });
+
   const refreshToken = jwt.sign({userId, nama, email}, process.env.REFRESH_TOKEN_SECRET,{
     expiresIn: '1d'
   });
+
   await Users.update({refresh_token:refreshToken},{
     where: {
       id : userId
     }
   });
-  res.cookie('refresh_token', refreshToken,{
+
+  res.cookie('refreshToken', refreshToken,{
     httpOnly: true,
     maxAge : 24 * 60 * 60 * 1000
   });
@@ -76,4 +81,24 @@ const user = await Users.create({
 res.status(200)
 .json({"msg" : "Akun Berhasil Dibuat"});
 }) 
+
+router.delete('/logout',async (req, res) => {
+  const refreshToken = req.cookies.refresh_token;
+  if(!refreshToken) return res.sendStatus(204);
+  const user = await Users.findOne({
+      where: {
+      refresh_token: refreshToken
+      }
+    });
+    if(!user) return res.sendStatus(403);
+    const userId = user.id;
+    await Users.update({refresh_token :null}, {
+      where: {
+        id : userId
+      }
+    });
+    res.clearCookie('refresh_token');
+    return res.sendStatus(200);
+  });
+
 module.exports = router;
