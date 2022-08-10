@@ -1,37 +1,43 @@
-module.exports = (sequelize, DataTypes)=>{
-    const Users = sequelize.define('Users', {
+var Post = require("./Post");
+module.exports = (sequelize, DataTypes) => {
+  const Users = sequelize.define(
+    "Users",
+    {
       id: {
         type: DataTypes.INTEGER,
-        primaryKey:true,
-        autoIncrement:true,
-        allowNull:false
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
       },
       nama: {
-      type: DataTypes.STRING,
-      allowNull :false,
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
-        allowNull :false,
+        allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
-        allowNull :false,
+        allowNull: false,
       },
       refresh_token: {
         type: DataTypes.TEXT,
-        allowNull :true,
+        allowNull: true,
       },
       createdAt: {
         type: DataTypes.DATE,
-        allowNull :false,
+        allowNull: false,
       },
       updatedAt: {
         type: DataTypes.DATE,
-        allowNull :false,
-      }
-    },{
-        tableName: 'users'
-    } );
-    return Users;
-}
+        allowNull: false,
+      },
+    },
+    {
+      tableName: "users",
+    }
+  );
+  // Users.hasMany(Post);
+  return Users;
+};

@@ -1,3 +1,5 @@
+
+ 
 module.exports = (sequelize, DataTypes)=>{
     const Post = sequelize.define('Post', {
       id: {
@@ -6,11 +8,15 @@ module.exports = (sequelize, DataTypes)=>{
         autoIncrement:true,
         allowNull:false
       },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull :false,
+      },
       nama: {
       type: DataTypes.STRING,
       allowNull :false,
       },
-      id_hewan: {
+      kd_hewan: {
         type: DataTypes.STRING(11),
         allowNull :false,
       },
@@ -37,6 +43,10 @@ module.exports = (sequelize, DataTypes)=>{
       informasi: {
         type: DataTypes.TEXT,
       },
+      foto: {
+        type: DataTypes.STRING,
+        allowNull :false,
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull :false,
@@ -48,5 +58,6 @@ module.exports = (sequelize, DataTypes)=>{
     },{
         tableName: 'posts'
     } );
+
     return Post;
 }

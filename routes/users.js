@@ -44,7 +44,7 @@ router.post('/login',async (req, res) => {
     }
   });
 
-  res.cookie('refreshToken', refreshToken,{
+  res.cookie("refreshToken", refreshToken,{
     httpOnly: true,
     maxAge : 24 * 60 * 60 * 1000
   });
@@ -83,7 +83,7 @@ res.status(200)
 }) 
 
 router.delete('/logout',async (req, res) => {
-  const refreshToken = req.cookies.refresh_token;
+  const refreshToken = req.cookies.refreshToken;
   if(!refreshToken) return res.sendStatus(204);
   const user = await Users.findOne({
       where: {
@@ -97,7 +97,7 @@ router.delete('/logout',async (req, res) => {
         id : userId
       }
     });
-    res.clearCookie('refresh_token');
+    res.clearCookie('refreshToken');
     return res.sendStatus(200);
   });
 
