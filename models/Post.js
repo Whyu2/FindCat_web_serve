@@ -1,5 +1,4 @@
 
- 
 module.exports = (sequelize, DataTypes)=>{
     const Post = sequelize.define('Post', {
       id: {
@@ -47,6 +46,7 @@ module.exports = (sequelize, DataTypes)=>{
         type: DataTypes.STRING,
         allowNull :false,
       },
+   
       createdAt: {
         type: DataTypes.DATE,
         allowNull :false,
@@ -58,6 +58,7 @@ module.exports = (sequelize, DataTypes)=>{
     },{
         tableName: 'posts'
     } );
-
     return Post;
 }
+
+

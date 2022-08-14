@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
 var tokenRouter = require('./routes/token');
+var path = require('path');
 
 var app = express();
 
@@ -22,6 +23,7 @@ var fileStorage = multer.diskStorage({
 });
 
 app.use(multer({storage : fileStorage}).single('foto'));
+app.use('/asset/foto', express.static(path.join(__dirname, 'asset/foto')));
 app.use(cors({ origin:true, credentials:true}))
 app.use(logger('dev'));
 app.use(cookieParser())
