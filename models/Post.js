@@ -11,42 +11,21 @@ module.exports = (sequelize, DataTypes)=>{
         type: DataTypes.INTEGER,
         allowNull :false,
       },
-      nama: {
+      judul_postingan: {
       type: DataTypes.STRING,
       allowNull :false,
-      },
-      kd_hewan: {
-        type: DataTypes.STRING(11),
-        allowNull :false,
-      },
-      daerah: {
-        type: DataTypes.STRING,
-        allowNull :false,
-      },
-      lokasimap: {
-        type: DataTypes.STRING,
-        allowNull :false,
-      },
-      tgl_hilang: {
-        type: DataTypes.DATE,
-        allowNull :false,
       },
       jenis: {
         type: DataTypes.STRING,
         allowNull :false,
       },
-      kelamin: {
-        type: DataTypes.STRING(11),
-        allowNull :false,
-      },
-      informasi: {
+      postingan: {
         type: DataTypes.TEXT,
       },
       foto: {
         type: DataTypes.STRING,
         allowNull :false,
       },
-   
       createdAt: {
         type: DataTypes.DATE,
         allowNull :false,

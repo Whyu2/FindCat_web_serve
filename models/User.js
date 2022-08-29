@@ -1,4 +1,4 @@
-var Post = require("./Post");
+
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define(
     "Users",

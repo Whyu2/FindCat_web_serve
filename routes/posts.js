@@ -2,40 +2,37 @@ var express = require("express");
 var router = express.Router();
 const Validator = require("fastest-validator");
 var verifyToken = require("../middleware/VerifyToken.js");
-const { Post } = require("../models");
+const { Post, Users,Index } = require("../models");
+
+
 const v = new Validator();
 /* GET users listing. */
 
 router.post("/", async (req, res) => {
-  const { nama, user_id, kd_hewan, daerah, lokasimap, jenis, kelamin, informasi} = req.body;
+  const { judul_postingan, user_id,jenis, postingan} = req.body;
   const foto = req.file.path;
-
       const schema = {
-          nama: 'string',
-          kd_hewan: 'string',
-          daerah: 'string',
-          lokasimap: 'string',
-          jenis: 'string',
-          kelamin: 'string',
-          informasi: 'string|optional'
-      }
+        judul_postingan: 'string',
+        jenis: 'string',
+        postingan: 'string'
+      };
         const validate = v.validate(req.body, schema);
         if(validate.length){
           return res
           .status(400)
           .json(validate);
-         }
-         //Uji coba date
+         };
          const tgl_hilang	 = new Date().toISOString();
           const newPost = {
-            user_id ,nama, kd_hewan, daerah, lokasimap,tgl_hilang, jenis, kelamin, informasi,foto
+            user_id ,judul_postingan, jenis, postingan,foto
        };
         const post = await Post.create(newPost);
         res.json(post);
     });
 
     router.put('/:id',async  (req, res) => {
-      const { nama, id_hewan, daerah, lokasimap, jenis, kelamin, informasi} = req.body;
+      const { judul_postingan, user_id,jenis, postingan} = req.body;
+      const foto = req.file.path;
       const id = req.params.id;
       let post = await Post.findByPk(id);
 
@@ -44,13 +41,9 @@ router.post("/", async (req, res) => {
         }
 
         const schema = {
-          nama: 'string|optional',
-          id_hewan: 'string|optional',
-          daerah: 'string|optional',
-          lokasimap: 'string|optional',
-          jenis: 'string|optional',
-          kelamin: 'string|optional',
-          informasi: 'string|optional'
+          judul_postingan: 'string',
+          jenis: 'string',
+          postingan: 'string|optional'
       }
         const validate = v.validate(req.body, schema);
 
@@ -59,17 +52,23 @@ router.post("/", async (req, res) => {
          .status(400)
          .json(validate);
         }
-
-        const tgl_hilang	 = new Date().toISOString();
         const newPost = {
-        nama, id_hewan, daerah, lokasimap,tgl_hilang, jenis, kelamin, informasi
+          user_id ,judul_postingan, jenis, postingan,foto
      };
       post = await post.update(newPost);
       res.json(post);
 });
 
 router.get("/", async (req, res) => {
-  const post = await Post.findAll();
+  const post = await Post.findAll({
+    include: [
+      {
+      model: Users,
+      as: 'user' 
+    }
+    ]
+  });
+
 
   return res.json(post);
 });
@@ -79,6 +78,7 @@ router.get("/:id", async (req, res) => {
   if (!post) {
     return res.json({});
   }
+  
   return res.json(post);
 });
 

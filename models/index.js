@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+const DataTypes = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config')[env];
@@ -31,7 +32,24 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+
+
+
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.Users = require('./User.js')(sequelize, DataTypes);
+db.Post = require('./Post.js')(sequelize, DataTypes);
+
+db.Users .hasMany(db.Post, {
+  foreignKey: 'user_id',
+  as: 'post'
+});
+
+db.Post.belongsTo(db.Users, {
+  foreignKey: 'user_id',
+  as: 'user'
+})
 module.exports = db;

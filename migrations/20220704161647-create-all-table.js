@@ -53,36 +53,15 @@ module.exports = {
           key: 'id'
       },onDelete: "CASCADE"
     },
-    kd_hewan: {
-      type: Sequelize.STRING(11),
-      allowNull :false,
-      },
-    nama: {
+    judul_postingan: {
     type: Sequelize.STRING,
     allowNull :false,
-    },
-   
-    daerah: {
-      type: Sequelize.STRING,
-      allowNull :false,
-    },
-    lokasimap: {
-      type: Sequelize.STRING,
-      allowNull :false,
-    },
-    tgl_hilang: {
-      type: Sequelize.DATE,
-      allowNull :false,
     },
     jenis: {
       type: Sequelize.STRING,
       allowNull :false,
     },
-    kelamin: {
-      type: Sequelize.STRING(11),
-      allowNull :false,
-    },
-    informasi: {
+    postingan: {
       type: Sequelize.TEXT,
     },
     foto: {
