@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
       res.json(post);
 });
 
-router.get("/", async (req, res) => {
+router.get("/",verifyToken, async (req, res) => {
   const post = await Post.findAll({
     include: [
       {
@@ -78,7 +78,6 @@ router.get("/:id", async (req, res) => {
   if (!post) {
     return res.json({});
   }
-  
   return res.json(post);
 });
 
