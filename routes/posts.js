@@ -8,7 +8,7 @@ const { Post, Users,Index } = require("../models");
 const v = new Validator();
 /* GET users listing. */
 
-router.post("/", async (req, res) => {
+router.post("/",verifyToken, async (req, res) => {
   const { judul_postingan, user_id,jenis, postingan} = req.body;
   const foto = req.file.path;
       const schema = {
@@ -68,10 +68,23 @@ router.get("/",verifyToken, async (req, res) => {
     }
     ]
   });
-
-
   return res.json(post);
 });
+router.get("/user-post/:id", async (req, res) => {
+  const id = req.params.id;
+  const post = await Post.findAll({
+    where: {
+      user_id: id,
+    }, include: [
+      {
+      model: Users,
+      as: 'user' 
+    }
+    ]
+  });
+  return res.json(post);
+});
+
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   const post = await Post.findByPk(id);

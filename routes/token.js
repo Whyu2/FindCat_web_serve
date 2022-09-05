@@ -19,7 +19,8 @@ router.get('/',async (req, res) => {
         const userId = user.id;
         const nama = user.nama;
         const email = user.email;
-        const accessToken = jwt.sign({userId, nama, email}, process.env.ACCESS_TOKEN_SECRET,{
+        const password =user.password;
+        const accessToken = jwt.sign({userId, nama, email, password}, process.env.ACCESS_TOKEN_SECRET,{
             expiresIn: '1d'
           });
           res.json({accessToken});
